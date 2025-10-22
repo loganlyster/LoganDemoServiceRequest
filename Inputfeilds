@@ -1,1 +1,29 @@
-
+<div id="thermogrid-scheduling-portal"></div>
+<script async defer src='https://logandemo.thermogrid.com/external/widgets/scheduling-portal.v1.0.js'></script>
+<script>
+  window.addEventListener("thermogrid:loaded", function(e){
+    thermogrid.init({
+      css: [
+        {
+          "selectorText": "#thermogrid-wrapper",
+          "cssText": "#thermogrid-wrapper { background-color: #ffffff; color: #000000; }",
+          "style": {
+            "backgroundColor": "#ffffff",
+            "color": "#000000",
+            "cssText": "background-color: #ffffff; color: #000000;"
+          }
+        },
+        {
+          "selectorText": "#thermogrid-wrapper .thermogrid-legend",
+          "cssText": "#thermogrid-wrapper .thermogrid-legend { color: #000000; }",
+          "style": {
+            "color": "#000000",
+            "cssText": "color: #000000;"
+          }
+        }
+      ],
+      height: 'auto',
+      width: '100%'
+    });
+  });
+</script>
