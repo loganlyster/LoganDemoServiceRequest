@@ -1,29 +1,51 @@
-<div id="thermogrid-scheduling-portal"></div>
-<script async defer src='https://logandemo.thermogrid.com/external/widgets/scheduling-portal.v1.0.js'></script>
-<script>
-  window.addEventListener("thermogrid:loaded", function(e){
-    thermogrid.init({
-      css: [
-        {
-          "selectorText": "#thermogrid-wrapper",
-          "cssText": "#thermogrid-wrapper { background-color: #ffffff; color: #000000; }",
-          "style": {
-            "backgroundColor": "#ffffff",
-            "color": "#000000",
-            "cssText": "background-color: #ffffff; color: #000000;"
-          }
-        },
-        {
-          "selectorText": "#thermogrid-wrapper .thermogrid-legend",
-          "cssText": "#thermogrid-wrapper .thermogrid-legend { color: #000000; }",
-          "style": {
-            "color": "#000000",
-            "cssText": "color: #000000;"
-          }
-        }
-      ],
-      height: 'auto',
-      width: '100%'
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ThermoGrid Demo Request</title>
+  <style>
+    body {
+      background: #f3f3f3;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    #thermogrid-scheduling-portal {
+      margin: 40px auto;
+      width: 90%;
+      max-width: 900px;
+      min-height: 600px;
+      background: #fff;
+      border: 2px dashed #888;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <h1>ThermoGrid Demo Request</h1>
+  <div id="thermogrid-scheduling-portal">
+    <p>Loading ThermoGrid scheduling widget...</p>
+  </div>
+
+  <!-- load script without async/defer so we can see if it errors -->
+  <script src="https://logandemo.thermogrid.com/external/widgets/scheduling-portal.v1.0.js"></script>
+  <script>
+    window.addEventListener("thermogrid:loaded", function(e){
+      console.log("ThermoGrid script loaded:", e);
+      if (typeof thermogrid !== "undefined") {
+        thermogrid.init({
+          css: [],
+          height: 'auto',
+          width: '100%'
+        });
+      } else {
+        document.querySelector("#thermogrid-scheduling-portal").innerText = 
+          "ThermoGrid widget failed to initialize (no global variable found).";
+      }
     });
-  });
-</script>
+  </script>
+</body>
+</html>
