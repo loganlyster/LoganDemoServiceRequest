@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ThermoGrid Demo Request</title>
+  <link rel="icon" href="data:," /> <!-- prevents favicon 404 -->
+
   <style>
     body {
       background: #f3f3f3;
@@ -30,13 +32,10 @@
     <p>Loading ThermoGrid scheduling widget...</p>
   </div>
 
-  <!-- Load ThermoGrid widget -->
-  <script src="scheduling-portal.v1.0.js"></script>
-
-
+  <script src="https://logandemo.thermogrid.com/external/widgets/scheduling-portal.v1.0.js"></script>
   <script>
-    // function to load/reload the widget
-    function loadThermoGridWidget() {
+    // Load widget when the ThermoGrid script fires its event
+    function initThermoGrid() {
       const wrapper = document.getElementById("thermogrid-scheduling-portal");
       wrapper.innerHTML = "<p>Loading ThermoGrid scheduling widget...</p>";
 
@@ -61,29 +60,26 @@
               }
             }
           ],
-          height: 'auto',
-          width: '100%'
+          height: "auto",
+          width: "100%"
         });
+        console.log("ThermoGrid widget initialized");
       } else {
-        console.error("ThermoGrid script not loaded yet.");
+        console.error("ThermoGrid not defined – script may be blocked by CORS.");
       }
     }
 
-    // initial load when widget script is ready
-    window.addEventListener("thermogrid:loaded", function() {
-      console.log("ThermoGrid widget loaded");
-      loadThermoGridWidget();
-    });
+    // Initial load
+    window.addEventListener("thermogrid:loaded", initThermoGrid);
 
-    // attempt to detect form submission success
+    // Watch for thank-you message and reload widget
     const observer = new MutationObserver(() => {
       const wrapper = document.querySelector("#thermogrid-scheduling-portal");
-      if (wrapper && wrapper.innerText.match(/thank you|successfully submitted/i)) {
-        console.log("Detected successful submission. Reloading widget...");
-        setTimeout(loadThermoGridWidget, 4000); // reload after 4 seconds
+      if (wrapper && wrapper.innerText.match(/thank you|submitted|success/i)) {
+        console.log("Submission detected, reloading widget in 5 seconds...");
+        setTimeout(initThermoGrid, 5000);
       }
     });
-
     observer.observe(document.body, { childList: true, subtree: true });
   </script>
 </body>
